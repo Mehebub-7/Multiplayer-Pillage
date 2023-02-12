@@ -14,7 +14,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     private NetworkRunner _runner;
     [SerializeField] private NetworkPrefabRef[] _playerPrefabs;
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
-    public DiceHolder[] diceHolder;
+    [SerializeField] DiceHolder[] diceHolder;
     public int currentPlayerIndex;
 
     private void Awake()
@@ -61,7 +61,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefabs[spawnIndex], spawnPosition, Quaternion.identity, player);
             // Keep track of the player avatars so we can remove it when they disconnect
             _spawnedCharacters.Add(player, networkPlayerObject);
-            Player tempPlayer = networkPlayerObject.GetComponent<Player>();
+            Piece tempPlayer = networkPlayerObject.GetComponent<Piece>();
             for (int i = 0; i < waypoints[spawnIndex].childCount; i++)
             {
                 tempPlayer.waypoints.Add(waypoints[spawnIndex].GetChild(i));

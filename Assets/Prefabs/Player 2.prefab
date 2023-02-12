@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 854421478824656012}
   - component: {fileID: -3979172125789353306}
   - component: {fileID: -612290286527663095}
+  - component: {fileID: 7724652628314678852}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Player
@@ -60,6 +61,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 854421478824656012}
   - {fileID: -612290286527663095}
+  - {fileID: 7724652628314678852}
   SimulationBehaviours: []
 --- !u!114 &854421478824656012
 MonoBehaviour:
@@ -75,7 +77,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   waypoints: []
-  canMove: 0
+  playerIndex: 0
+  view: {fileID: 7724652628314678852}
 --- !u!65 &-3979172125789353306
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -117,6 +120,19 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
+--- !u!114 &7724652628314678852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854421478824656013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53739a72205e9aa4691561c1265d1c0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
 --- !u!1001 &854421478460101508
 PrefabInstance:
   m_ObjectHideFlags: 0

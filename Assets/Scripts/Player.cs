@@ -1,48 +1,27 @@
-using Fusion;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-public class Player : NetworkBehaviour
+public class Player
 {
-    int waypointIndex;
-    public List<Transform> waypoints;
-    public int playerIndex;
+    public delegate void PositionEvent(Position position);
+    public event PositionEvent OnPositionChanged;
 
-    public override void FixedUpdateNetwork()
+    public Position position
     {
-        if (playerIndex == BasicSpawner.Instance.currentPlayerIndex)
+        get
         {
-            if (GetInput(out NetworkInputData data))
+            return _position;
+        }
+        set
+        {
+            if (_position != value)
             {
-                Physics.Raycast(Camera.main.ScreenPointToRay(data.mousePosition), out RaycastHit hit);
-                if (hit.transform != null)
+                _position = value;
+                if (OnPositionChanged != null)
                 {
-                    if (hit.transform.GetComponent<DiceHolder>() != null)
-                    {
-                        if (hit.transform.GetComponent<DiceHolder>().diceIndex == playerIndex)
-                        {
-                            BasicSpawner.Instance.currentPlayerIndex++;
-                            BasicSpawner.Instance.currentPlayerIndex %= BasicSpawner.Instance.spawnIndex;
-                            int diceValue = Random.Range(1, 7);
-                            StartCoroutine(Move(diceValue));
-                        }
-                    }
+                    OnPositionChanged(value);
                 }
             }
         }
     }
-    public IEnumerator Move(int count)
-    {
-        while (count > 0)
-        {
-            waypointIndex++;
-            if (waypointIndex < waypoints.Count)
-            {
-                transform.position = waypoints[waypointIndex].position;
-                yield return new WaitForSeconds(.5f);
-            }
-            count--;
-        }
-    }
+    private Position _position;
 }
